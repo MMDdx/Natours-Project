@@ -1,0 +1,118 @@
+extends base
+
+include _reviewcard
+
+block append head
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+    <link rel="stylesheet" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+    <script defer src="https://js.stripe.com/v3/"></script>
+
+    //<meta http-equiv="Content-Security-Policy" content="script-src 'self' blob:;">
+    //<script src="/dist/maplibre-gl.js"></script>
+    //<link href="/dist/maplibre-gl.css" rel="stylesheet" />
+
+
+    //script(src="https://js.api.here.com/v3/3.1/mapsjs-core.js" type="text/javascript" charset="utf-8" )
+    //script(src="https://js.api.here.com/v3/3.1/mapsjs-service.js"
+    //    type="text/javascript" charset="utf-8")
+
+mixin overviewBox(label, text, icon)
+    .overview-box__detail
+        svg.overview-box__icon
+            use(xlink:href=`/img/icons.svg#icon-${icon}`)
+        span.overview-box__label=label
+        span.overview-box__text=text
+
+
+block content
+    section.section-header
+        .header__hero
+            .header__hero-overlay &nbsp;
+            img.header__hero-img(src=`/img/tours/${tour.imageCover}`, alt=`${tour.name}`)
+
+        .heading-box
+            h1.heading-primary
+                span= `${tour.name} tour`
+            .heading-box__group
+                .heading-box__detail
+                    svg.heading-box__icon
+                        use(xlink:href='/img/icons.svg#icon-clock')
+                    span.heading-box__text=`${tour.duration} days`
+                .heading-box__detail
+                    svg.heading-box__icon
+                        use(xlink:href='/img/icons.svg#icon-map-pin')
+                    span.heading-box__text=tour.startLocation.description
+
+    section.section-description
+        .overview-box
+            div
+                .overview-box__group
+                    h2.heading-secondary.ma-bt-lg Quick facts
+                    - const date = tour.startDates[0].toLocaleString('en-us', {month: "long", year: 'numeric'})
+                    +overviewBox("next date", date, "calender")
+                    +overviewBox("difficulty", tour.difficulty, "trending-up")
+                    +overviewBox("participants", `${tour.maxGroupSize} people`, "user")
+                    +overviewBox("Rating", `${tour.ratingAverage} / 5`, "star")
+
+                .overview-box__group
+                    h2.heading-secondary.ma-bt-lg Your tour guides
+                    each guide in tour.guides
+                        .overview-box__detail
+                            img.overview-box__img(src=`/img/users/${guide.photo}`, alt=`${guide.name}`)
+                            - if (guide.role === 'lead-guide')
+                                span.overview-box__label Lead guide
+                            - if (guide.role === 'guide')
+                                span.overview-box__label  Tour Guide
+                            span.overview-box__text= guide.name
+
+
+        .description-box
+            h2.heading-secondary.ma-bt-lg= `About ${tour.name} tour`
+            - const paragraphs = tour.description.split("\n")
+            each p in paragraphs
+                p.description__text= p
+
+    section.section-pictures
+        each image, i in tour.images
+            .picture-box
+                img.picture-box__img(src=`/img/tours/${image}`, alt=`The Park camper tour ${i+1}` ,class=`picture-box__img--${i+1}`)
+
+    section.section-map
+        #map(data-locations=`${JSON.stringify(tour.locations)}`)
+
+    section.section-reviews
+        .reviews
+            each review in tour.reviews
+                +reviewCard(review)
+    - if (user && user.emailConfirmed)
+        .user-view__form-container
+            h2.heading-secondary.ma-bt-md Tell us your Review on this tour!
+            form.form.form-user-data#form-user-review(data-id=`${tour.id}`)
+                .form__group
+                    label.form__label(for='review') review
+                    input.form__input.review__input#review(type='text', required, name='review')
+                .form__group.ma-bt-md
+                    label.form__label(for='range') rate it!
+                    input.form__input.review__input#range(type='number' min=1 max=5 required, name='range')
+                .form__group.right
+                    button.btn.btn--small.btn--green#review-btn Save Review
+
+    section.section-cta
+        .cta
+            .cta__img.cta__img--logo
+                img(src='/img/logo-white.png', alt='Natours logo')
+            img.cta__img.cta__img--1(src=`/img/tours/${tour.images[1]}`, alt='Tour pic!')
+            img.cta__img.cta__img--2(src=`/img/tours/${tour.images[2]}`, alt='Tour pic!')
+            .cta__content
+                h2.heading-secondary What are you waiting for?
+                p.cta__text= `${tour.duration} days. 1 adventure. Infinite memories. Make it yours today!`
+                -if (user && user.emailConfirmed)
+                     button.btn.btn--green.span-all-rows#book-tour(data-tour-id=`${tour.id}`) Book tour now!
+
+                - else if (user)
+                    button.btn.btn--green.span-all-rows#book-tour(data-tour-id=`${tour.id}`) Validate before booking a tour a tour!
+                -else
+                    a.btn.btn--green.span-all-rows(href=`/login`) Log in to book tour

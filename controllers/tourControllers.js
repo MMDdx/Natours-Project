@@ -32,7 +32,7 @@ exports.uploadTourImages = upload.fields([
 exports.resizeTourImages = catchAsync(async (req, res, next) => {
 
     if (!req.files.imageCover || !req.files.images) return next();
-    console.log("happening!")
+
     // 1) Cover image
     req.body.imageCover = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
     await sharp(req.files.imageCover[0].buffer)
@@ -53,7 +53,7 @@ exports.resizeTourImages = catchAsync(async (req, res, next) => {
 
         req.body.images.push(filename);
     }))
-    console.log(req.body)
+
     return next();
 })
 
@@ -207,7 +207,7 @@ exports.getToursWithin =catchAsync(async (req,res,next)=>{
     const [lat,lng] = latlng.split(",");
     const radius = unit === 'mi' ? distance / 3963.2 : distance / 6378.1;
     if (!lat || !lng) return next(new AppError("please provide longitude in format lat,lng.", 400))
-    console.log(distance, lat, lng, unit)
+
 
     const tours = await Tour.find({ startLocation: { $geoWithin: {$centerSphere: [[lng,lat], radius] }} })
     // startLocation: { $geoWithin: { $centerSphere: [[lng, lat], radius] } }

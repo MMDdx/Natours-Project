@@ -8,7 +8,7 @@ const handleCastErrorDB = err =>{
 
 const handleDuplicateFieldsDB = err =>{
     const value = err.message.match(/"([^"\\]|\\.|\\\n)*"|'([^'\\]|\\.|\\\n)*'/)
-    console.log(value)
+
       const message = `Duplicate field val ${value} please use another!`;
     return new AppError(message, 400)
 }
@@ -45,7 +45,7 @@ const sendErrorProduction = (err,req,res) =>{
             })
         }
         else {
-            console.error("ERROR!!!!")
+
             res.status(500).json({
                 status: 'error',
                 message: "something went wrong!"

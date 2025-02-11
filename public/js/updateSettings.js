@@ -6,8 +6,8 @@ import {showAlert} from "./alerts";
 export const updateSettings = async (data, type) => {
     try {
         let url;
-        if (type === "data") url = 'http://127.0.0.1:8000/api/v1/users/updateMe'
-        else if (type === 'password') url = 'http://127.0.0.1:8000/api/v1/users/updatePassword'
+        if (type === "data") url = '/api/v1/users/updateMe'
+        else if (type === 'password') url = '/api/v1/users/updatePassword'
 
         const res = await axios({
             method: 'PATCH',
@@ -29,7 +29,7 @@ export const submitReview = async (review,range,id) => {
 
         const res = await axios({
             method: 'POST',
-            url: `http://127.0.0.1:8000/api/v1/tours/${id}/reviews`,
+            url: `/api/v1/tours/${id}/reviews`,
             data:{
                 review,
                 rating:(range*1),
@@ -41,7 +41,7 @@ export const submitReview = async (review,range,id) => {
         }
     }catch (err){
         showAlert("error",err.response);
-        console.log(err)
+
     }
 }
 

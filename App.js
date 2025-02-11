@@ -14,7 +14,7 @@ const hpp = require("hpp")
 const viewRouter = require("./routes/viewRoutes.js")
 const bookingRouter = require("./routes/bookingRoutes.js")
 const likesRoutes = require("./routes/likeRoutes.js")
-
+const compression = require("compression")
 
 const cookie_parser = require("cookie-parser")
 // start express app
@@ -33,7 +33,7 @@ app.use(express.static(`${__dirname}/public`));
 // security http headers
 app.use(helmet({contentSecurityPolicy: false}))
 
-console.log(process.env.NODE_ENV)
+
 if (process.env.NODE_ENV === "development") {
     app.use(morgan('dev'));
 }
@@ -60,6 +60,9 @@ app.use(xss())
 app.use(hpp({
     whitelist: ["duration",'ratingsQuantity', 'ratingsAverage', 'maxGroupSize', 'price']
 }))
+
+app.use(compression())
+
 // test middleware
 app.use((req,res,next)=>{
     req.requestTime = new Date().toISOString()

@@ -104,7 +104,7 @@ if (reviewForm){
 
 if (likeH){
     likeH.parentElement.onclick = async e => {
-        const url = 'http://127.0.0.1:8000/api/v1/likes/'
+        const url = '/api/v1/likes/'
         const tourId = document.querySelector("#book-tour").dataset.tourId
         const countLike = document.querySelector(".countLike")
         let countedlikes = parseInt(countLike.textContent)

@@ -6,16 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="62616432-b0be-4588-a2b3-e148b6997429" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/errorController.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/errorController.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/tourControllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/tourControllers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/userControllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/userControllers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/stripe.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/stripe.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/updateSettings.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/updateSettings.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.js" beforeDir="false" afterPath="$PROJECT_DIR$/server.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/tour.pug" beforeDir="false" afterPath="$PROJECT_DIR$/views/tour.pug" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +45,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_MARK_IGNORED_FILES_AS_EXCLUDED&quot;: &quot;true&quot;,
     &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
     &quot;JavaScript Debug.index.html.executor&quot;: &quot;Run&quot;,
     &quot;JavaScript Debug.product.html.executor&quot;: &quot;Run&quot;,
@@ -298,7 +291,8 @@
       <workItem from="1739191691232" duration="9580000" />
       <workItem from="1739260734942" duration="5401000" />
       <workItem from="1739275340062" duration="14677000" />
-      <workItem from="1739291085931" duration="2265000" />
+      <workItem from="1739291085931" duration="2898000" />
+      <workItem from="1739298979544" duration="3085000" />
     </task>
     <servers />
   </component>

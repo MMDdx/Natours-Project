@@ -10,7 +10,7 @@ process.on('uncaughtException', (err) => {
 dotenv.config({path: "./config.env"})
 const app = require(`./app.js`)
 
-mongoose.connect(process.env.DATABASE_LOCAL,{
+mongoose.connect(process.env.ATLAS_DB,{
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false
@@ -19,7 +19,7 @@ mongoose.connect(process.env.DATABASE_LOCAL,{
 
 const port =  process.env.PORT || 3000
 
-const server = app.listen(port,(req, res)=>{
+const server = app.listen(port,'0.0.0.0',(req, res)=>{
     console.log("server started on port ",port)
 })
 

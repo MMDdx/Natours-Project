@@ -65,7 +65,7 @@ block content
                     +overviewBox("participants", `${tour.maxGroupSize} people`, "user")
                     +overviewBox("Rating", `${tour.ratingAverage} / 5`, "star")
                     - const allprops = tour.likes.map(el => String(el.user))
-                    - if (allprops.includes(String(user._id)))
+                    - if (user && allprops.includes(String(user._id)))
                         +overviewBox("Likes", `${tour.likes.length}`, "heart", 'liked')
 
                     - else

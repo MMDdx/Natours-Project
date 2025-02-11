@@ -19,7 +19,7 @@ exports.getOverview =async (req, res, next) => {
 exports.getTour =catchAsync(async (req, res, next) => {
     const tour = await Tour.findOne({slug: req.params.tourName}).populate({path:"reviews",
     fields: 'review rating user'
-    });
+    }).populate({path:"likes", select:"user _id -tour"});
 
     if (!tour){
         return next(new AppError('No tour found with that name', 404))

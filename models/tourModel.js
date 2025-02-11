@@ -134,6 +134,13 @@ tourSchema.virtual("reviews", {
     localField: "_id"
 })
 
+tourSchema.virtual("likes", {
+    ref: "Like",
+    foreignField: "tour",
+    localField: "_id"
+})
+
+
 // Doc middleware : runs before .save() and create()
 tourSchema.pre("save", function(next){
     this.slug = slugify(this.name, {lower:true});

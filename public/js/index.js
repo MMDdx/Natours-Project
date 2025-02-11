@@ -3,6 +3,7 @@ import {login, logout, signUp} from "./login";
 import {updateSettings, submitReview} from "./updateSettings.js";
 import {bookTour} from "./stripe";
 import {showMap} from "./mapBox";
+import axios from "axios";
 // dom elems
 let locations = document.querySelector("#map")
 const form = document.querySelector(".form--login")
@@ -13,7 +14,7 @@ const userPasswordForm = document.querySelector("#form-user-password")
 const myMap = document.querySelector("#map")
 const bookBtn = document.querySelector("#book-tour")
 const reviewForm = document.querySelector("#form-user-review")
-
+const likeH = document.querySelector(".like")
 // delegation
 if (locations) {locations = JSON.parse(locations.dataset.locations)}
 
@@ -98,5 +99,51 @@ if (reviewForm){
         subBtn.value = "Save Review"
         review.value = ""
         range.value = ""
+    }
+}
+
+if (likeH){
+    likeH.parentElement.onclick = async e => {
+        const url = 'http://127.0.0.1:8000/api/v1/likes/'
+        const tourId = document.querySelector("#book-tour").dataset.tourId
+        const countLike = document.querySelector(".countLike")
+        let countedlikes = parseInt(countLike.textContent)
+        try {
+
+            if (likeH.classList.contains("liked")){
+                // delete
+                 let res = await axios({
+                    method: "DELETE",
+                    url: url + `/${tourId}`,
+                })
+
+                likeH.classList.remove("liked")
+                likeH.setAttribute("fill", "");
+                 likeH.setAttribute("stroke", "");
+                 countLike.textContent -= 1;
+            }
+            else {
+                let res = await axios({
+                    method: "POST",
+                    url,
+                    data:{
+                        tour:tourId,
+                    }
+                })
+                if (res.data.status === 'success'){
+                    likeH.classList.add("liked")
+                    likeH.setAttribute("fill", "red");
+                    likeH.setAttribute("stroke", "red");
+                    countedlikes+=1;
+                    countLike.textContent = countedlikes
+                }
+            }
+
+
+        }
+        catch (err){
+            console.log(err)
+        }
+
     }
 }

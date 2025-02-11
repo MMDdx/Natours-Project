@@ -13,6 +13,8 @@ const xss = require('xss-clean')
 const hpp = require("hpp")
 const viewRouter = require("./routes/viewRoutes.js")
 const bookingRouter = require("./routes/bookingRoutes.js")
+const likesRoutes = require("./routes/likeRoutes.js")
+
 
 const cookie_parser = require("cookie-parser")
 // start express app
@@ -72,6 +74,8 @@ app.use("/api/v1/tours", tour_router)
 app.use("/api/v1/users", user_router)
 app.use("/api/v1/reviews", review_router)
 app.use("/api/v1/bookings", bookingRouter)
+// added likes here!
+app.use("/api/v1/likes", likesRoutes)
 app.all('*', (req, res, next)=>{
     // const err = new Error(`cant find ${req.originalUrl} on this server!`)
     // err.status = "fail"

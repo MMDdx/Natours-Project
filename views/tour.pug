@@ -19,12 +19,20 @@ block append head
     //script(src="https://js.api.here.com/v3/3.1/mapsjs-service.js"
     //    type="text/javascript" charset="utf-8")
 
-mixin overviewBox(label, text, icon)
+mixin overviewBox(label, text, icon,status)
     .overview-box__detail
         svg.overview-box__icon
-            use(xlink:href=`/img/icons.svg#icon-${icon}`)
+            - if (status === "liked")
+                use(href=`/img/icons.svg#icon-${icon}` fill='red' stroke='red' class=`${status} like`)
+            - else if (status)
+                use(href=`/img/icons.svg#icon-${icon}` class='like')
+            - else
+                use(href=`/img/icons.svg#icon-${icon}`)
         span.overview-box__label=label
-        span.overview-box__text=text
+        -if (status)
+            span.overview-box__text.countLike=text
+        - else
+            span.overview-box__text=text
 
 
 block content
@@ -52,10 +60,16 @@ block content
                 .overview-box__group
                     h2.heading-secondary.ma-bt-lg Quick facts
                     - const date = tour.startDates[0].toLocaleString('en-us', {month: "long", year: 'numeric'})
-                    +overviewBox("next date", date, "calender")
+                    +overviewBox("next date", date, "calendar")
                     +overviewBox("difficulty", tour.difficulty, "trending-up")
                     +overviewBox("participants", `${tour.maxGroupSize} people`, "user")
                     +overviewBox("Rating", `${tour.ratingAverage} / 5`, "star")
+                    - const allprops = tour.likes.map(el => String(el.user))
+                    - if (allprops.includes(String(user._id)))
+                        +overviewBox("Likes", `${tour.likes.length}`, "heart", 'liked')
+
+                    - else
+                        +overviewBox("Likes", `${tour.likes.length}`, "heart", "like")
 
                 .overview-box__group
                     h2.heading-secondary.ma-bt-lg Your tour guides
@@ -87,6 +101,7 @@ block content
         .reviews
             each review in tour.reviews
                 +reviewCard(review)
+
     - if (user && user.emailConfirmed)
         .user-view__form-container
             h2.heading-secondary.ma-bt-md Tell us your Review on this tour!

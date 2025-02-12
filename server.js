@@ -8,7 +8,7 @@ process.on('uncaughtException', (err) => {
 })
 
 dotenv.config({path: "./config.env"})
-const app = require(`./app.js`)
+const app = require(`./App.js`)
 
 mongoose.connect(process.env.ATLAS_DB,{
     useNewUrlParser: true,
